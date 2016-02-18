@@ -1,0 +1,30 @@
+html{
+	font: 100%/1.5 "Roboto", Verdana, sans-serif;
+	background-color: #fff;
+	-webkit-font-smoothing: antialiased;
+	text-align: center;
+}
+
+.title h1{
+	display: block;
+	font-size: 6rem;
+	font-weight: 100;
+	line-height: 1;
+	letter-spacing: -.05em;
+	color: #f35626;
+    background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+

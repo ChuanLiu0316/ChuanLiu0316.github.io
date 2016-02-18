@@ -1,14 +1,16 @@
 var Title = React.createClass({
-	render:function() {
-		return (
-			<div className="title">
-				<h1> Chuan Liu </h1>
-			</div>
-		);
-	}
+  render: function() {
+    return (
+      <div>			
+        <div className="title">
+          <h1>Chuan Liu</h1>
+        </div>
+        <ChatRoom />
+      </div>
+    );
+  }
 });
-
-ReactDom.render(
-	<Title />,
-	document.getElementById('content');
+ReactDOM.render(
+  <Title />,
+  document.getElementById('content')
 );
