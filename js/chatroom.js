@@ -5,21 +5,24 @@
 			- Chat
 		- ChatForm (including submit button, etc)	
 */
+var hello = "asdqweasldkjlkajsdlkjqwe";
+console.log(hello);
 
-<script src="/socket.io/socket.io.js"></script>
-var CHAT_ROOM_SOCKET_SERVER_ADDRESS = ""
-window.ChatRoom = React.createClass({
-	getInitialState: function(){
-		return {data: []};
-	},
+var CHAT_ROOM_SOCKET_SERVER_ADDRESS = "https://mysterious-chamber-42289.herokuapp.com/"
+var ChatRoom = React.createClass({
+    getInitialState: function() {
+      return {data: []};
+    },
 	componentDidMount: function(){
-		this.socket = io(CHAT_ROOM_SOCKET_SERVER_ADDRESS)
+		console.log(this.state.data);
+		this.socket = io.connect(CHAT_ROOM_SOCKET_SERVER_ADDRESS);
 		this.socket.on('chat message', function(data){
-			console.log(data.message);
-			var chats = this.state.data
-			var newchats = comments.push(data)
-			this.setState({data: newchats});
-		});
+			console.log(this.state.data);
+			var chats = this.state.data;
+			console.log('end');
+			chats.push(data)
+			this.setState({data: chats});
+		}.bind(this));
 
 	},
 	sendChat: function(data){
@@ -30,7 +33,7 @@ window.ChatRoom = React.createClass({
 			<div className="chatRoom">
 				<h1>Chat</h1>
 				<ChatList data= {this.state.data} />
-				<ChatForm onChatSend = {this.sentChat} />
+				<ChatForm onChatSubmit={this.sendChat} />
 			</div>
 		);
 	}
@@ -40,6 +43,7 @@ window.ChatRoom = React.createClass({
 var ChatList = React.createClass({
 
 	render: function(){
+
 		var chatNodes = this.props.data.map(function(chat){
 			return (
 				<Chat message = {chat.message}/>
@@ -58,7 +62,7 @@ var Chat = React.createClass({
 	render: function(){
 		return (
 			<div className="chat">
-				//<p className="chatAuthor"> {this.props.author}</p>
+				
 				<p className="chatMessage">{this.props.message}</p>
 			</div>
 		);
@@ -69,16 +73,17 @@ var ChatForm = React.createClass({
 	getInitialState: function() {
     	return {message: ''};
   	},
-  	handleMessageChange: function(){
+  	handleMessageChange: function(e){
   		this.setState({message: e.target.value})
   	},
   	handleSubmit: function(e){
   		e.preventDefault();
-  		var message = this.sate.message;
-  		if (!text){
+  		var message = this.state.message;
+  		if (!message){
   			return;
   		}
-  		this.props.onChatSend({message: message});
+  		console.log("asdqwe");
+  		this.props.onChatSubmit({message: message});
   		this.setState({message: ''});
   	},
 	render : function(){
@@ -91,3 +96,8 @@ var ChatForm = React.createClass({
 	}
 });
 
+
+ReactDOM.render(
+  <ChatRoom />,
+  document.getElementById('chatRoom')
+);
